@@ -7,7 +7,7 @@
 
             <div class="input-group">
 
-                <div class="input-group-addon">Filter by column</div>
+                <h4 class="input-group-addon">Filter by column</h4>
 
                 <select class="form-control" name="filterType" id="filterType" ng-model="filterSettings.colName">
 
@@ -48,13 +48,21 @@
     <div class="col-md-10 col-md-offset-1">
 
         <div class="dataNotAvailable" ng-show="currentModel.length === 0">
-            Nothing to show
+
+            <div class="jumbotron">
+
+                <h4 class="container">
+                    Nothing to show
+                </h4>
+
+            </div>
+
         </div>
 
 
         <div class="dataAvailable" ng-show="currentModel.length > 0">
 
-            <ul class="pagination">
+            <ul class="pagination pagination-sm">
 
                 <li>
 

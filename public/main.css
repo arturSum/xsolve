@@ -7,15 +7,26 @@
 
 
 
-
 .model{
     margin-top: 20px;
+}
+
+.dataNotAvailable{
+    margin-top: 20px;
+    color: #a94442;
+}
+
+.jumbotron .container{
+
+    text-align: center;
+    font-weight: bold;
 }
 
 
 .pageNmbr.selected{
     background-color: #eee;
     color:#a94442;
+    font-weight: bold;
 }
 
 .pageNmbr.unselected{
@@ -30,7 +41,9 @@
 
 .filterPanel .input-group-addon{
     color: #a94442;
+    font-weight: bold;
 }
+
 
 .pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover{
     color:#a94442;
