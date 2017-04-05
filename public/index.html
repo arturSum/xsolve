@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>XSolve_Sluzba</title>
 
+    <link rel="stylesheet" href="./../node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+
     <link rel="stylesheet" href="main.css" />
 
     <script src="./../node_modules/angular/angular.min.js"></script>
@@ -20,76 +23,142 @@
 
 </head>
 
-<body ng-controller="FrontCtrl">
+<body class="container-fluid" ng-controller="FrontCtrl">
 
 
-    <div class="filterPanel">
+    <div class="filterPanel row">
 
-        <h4>
-            Filter:
+        <div class="col-md-10 col-md-offset-1 form-inline">
 
-            <select name="filterType" id="filterType" ng-model="filterSettings.colName">
+            <div class="inputs form-group">
 
-                <option value="">Select one</option>
-                <option ng-repeat="name in columnsName" value="{{ name }}">{{ name }}</option>
+                <div class="input-group">
 
-            </select>
+                    <div class="input-group-addon">Filter by column</div>
+
+                    <select class="form-control" name="filterType" id="filterType" ng-model="filterSettings.colName">
+
+                        <option value="">Select one</option>
+                        <option ng-repeat="name in columnsName" value="{{ name }}">{{ name }}</option>
+
+                    </select>
+
+                </div>
+
+                <input
+                        class="form-control"
+                        type="datetime-local"
+                        placeholder="value"
+                        ng-model="filterSettings.dateValue"
+                        ng-show="filterSettings.colName == 'dateOfBirth'"
+                />
+
+                <input
+                        class="form-control"
+                        type="text"
+                        placeholder="value"
+                        ng-model="filterSettings.value"
+                        ng-show="filterSettings.colName !== 'dateOfBirth'"
+                />
 
 
-            <input type="datetime-local" ng-model="filterSettings.dateValue" ng-show="filterSettings.colName == 'dateOfBirth'"/>
-            <input type="text" ng-model="filterSettings.value" ng-show="filterSettings.colName !== 'dateOfBirth'"/>
+            </div>
 
+        </div>
 
-        </h4>
 
     </div>
 
 
-    <div class="model">
-
-        <div class="dataNotAvailable" ng-show="currentModel.length == 0">
-            Nothing to show
-        </div>
+    <div class="model row">
 
 
-        <div class="dataAvailable" ng-show="currentModel.length > 0">
+        <div class="col-md-10 col-md-offset-1">
+
+            <div class="dataNotAvailable" ng-show="currentModel.length === 0">
+                Nothing to show
+            </div>
 
 
-            <div class="pagination">
+            <div class="dataAvailable" ng-show="currentModel.length > 0">
 
-                <h4>
+                <ul class="pagination">
 
-                    See page:
+                    <li>
 
-                    <a href="#" class="pageNmbr" ng-click="selectPage(0)">All</a>
-                    <a href="#" class="pageNmbr" ng-repeat="pageNmbr in currentModel | pageSizeCounter" ng-click="selectPage(pageNmbr)">{{ pageNmbr }}</a>
+                        <a
+                           href="#"
+                           class="pageNmbr {{ selectedPage === 0? 'selected':'unselected' }}"
+                           ng-click="selectPage(0)"
+                        >
+                            All
+                        </a>
 
-                </h4>
+                    </li>
+
+                    <li ng-repeat="pageNmbr in currentModel | pageSizeCounter" ng-click="selectPage(pageNmbr)">
+
+                         <a
+                             href="#"
+                             class="pageNmbr {{ selectedPage === pageNmbr? 'selected':'unselected' }}"
+                         >
+                             {{ pageNmbr }}
+                         </a>
+
+                    </li>
+
+                </ul>
+
+
+                <table class="data table table-hover table-bordered">
+
+                    <thead>
+
+                    <tr>
+
+                        <th class="text-center" ng-repeat="name in columnsName">
+
+                            <a
+                               href="#"
+                               data-sorting-method="asc"
+                               class="{{ sortedSettings.columnName === name? 'active' : '' }}"
+                               ng-click="sortDataByColumn(name, $event)"
+                            >
+                                {{ name }}
+                            </a>
+
+                            <div class="sort_icon" ng-show="sortedSettings.columnName === name">
+
+                                <span class="asc glyphicon glyphicon-chevron-down" ng-show="sortedSettings.type === 'desc'"></span>
+
+                                <span class="asc glyphicon glyphicon-chevron-up" ng-show="sortedSettings.type === 'asc'"></span>
+
+                            </div>
+
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    <tr align="center" ng-repeat="person in currentModel | limitModel:selectedPage track by person.id">
+
+                        <td ng-repeat="value in person">{{ value }}</td>
+
+                    </tr>
+
+                    </tbody>
+
+
+
+                </table>
 
             </div>
 
 
-            <table class="data">
-
-                <tr>
-                    <th ng-repeat="name in columnsName">
-
-                        <a href="#" data-sorting-method="asc" ng-click="sortDataByColumn(name, $event)">{{ name }} &#8595</a>
-
-                    </th>
-                </tr>
-
-                <tr align="center" ng-repeat="person in currentModel | limitModel:selectedPage track by person.id">
-
-                    <td ng-repeat="value in person">{{ value }}</td>
-
-                </tr>
-
-
-            </table>
-
         </div>
-
 
 
 

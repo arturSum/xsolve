@@ -1,54 +1,69 @@
-a{
+*{
+    margin:0;
+    padding:0;
     text-decoration: none;
-}
 
-a:link, a:visited{
-    color: blue;
-}
-
-a:hover{
-    color: blue;
 }
 
 
 
 
+.model{
+    margin-top: 20px;
+}
 
+
+.pageNmbr.selected{
+    background-color: #eee;
+    color:#a94442;
+}
+
+.pageNmbr.unselected{
+    background-color: white;
+}
 
 
 .filterPanel{
-
-    /*outline: solid 1px red;*/
-
-    width: 80%;
-    height: 100px;
-
-
-
+    margin-top: 40px;
 }
 
 
-.pagination{
-
-    /*outline: solid 1px blue;*/
-
-    width: 80%;
-
-
-
+.filterPanel .input-group-addon{
+    color: #a94442;
 }
 
-.pagination .pageNmbr{
-    margin-left: 10px;
+.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover{
+    color:#a94442;
 }
 
 
 
-.model table{
-    text-align: center;
-    width: 80%;
+
+.data th{
+    position: relative;
 }
 
-.model table, th, tr{
-    border: solid 1px black;
+.data th a{
+    color: #337ab7;
+}
+
+.data th a:focus, .data th a:hover{
+    text-decoration: none;
+}
+
+.data th a.active{
+    color:#a94442;
+}
+
+.sort_icon{
+
+    display: inline-block;
+    position: absolute;
+    top: 11px;
+    margin-left: 8px;
+}
+
+.sort_icon span{
+    position: absolute;
+    color:#a94442;
 }

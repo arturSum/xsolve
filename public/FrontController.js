@@ -9,10 +9,27 @@ angular.module('sluzba').controller('FrontCtrl', function($scope, $http, $filter
     $scope.filterSettings = {
         colName : '',
         value : '',
-        dateValue : new Date()
+        dateValue : (()=>{
+
+            var currentDate = new Date();
+
+            return new Date(
+                currentDate.getFullYear(),
+                currentDate.getMonth(),
+                currentDate.getDate(),
+                currentDate.getHours(),
+                currentDate.getMinutes()
+            );
+
+        })()
     };
 
     $scope.selectedPage = 0;
+
+    $scope.sortedSettings = {
+        columnName : '',
+        type : ''
+    };
 
 
     //-----------------------------------------
@@ -36,6 +53,13 @@ angular.module('sluzba').controller('FrontCtrl', function($scope, $http, $filter
 
         element.setAttribute('data-sorting-method', sortingMethod === 'asc'? 'desc' : 'asc');
 
+
+        $scope.sortedSettings = {
+            columnName,
+            type : sortingMethod
+        } ;
+
+
     };
 
 
@@ -47,6 +71,8 @@ angular.module('sluzba').controller('FrontCtrl', function($scope, $http, $filter
     $scope.$watchCollection('filterSettings', ()=>{
 
         $scope.selectedPage = 0;
+
+        $scope.sortedSettings.columnName = '';
 
         $scope.currentModel = $filter('filterModel')($scope.oryginalModel, $scope.filterSettings);
 

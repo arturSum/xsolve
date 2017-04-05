@@ -172,7 +172,7 @@ angular.module('sluzba')
                     //---------------------------
 
 
-                    sortedTemporaryDateStorage = sortNumbers(unsortedTemporaryDateStorage, 'dataForSorting', direction);
+                    sortedTemporaryDateStorage = sortNumbers(unsortedTemporaryDateStorage, 'dataForSorting', 'asc');
 
 
                     sortedTemporaryDateStorage.forEach((data)=>{
@@ -205,7 +205,6 @@ angular.module('sluzba')
 
                     model.reverse();
                 }
-
 
                 return model;
             };
