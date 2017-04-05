@@ -1,0 +1,54 @@
+a{
+    text-decoration: none;
+}
+
+a:link, a:visited{
+    color: blue;
+}
+
+a:hover{
+    color: blue;
+}
+
+
+
+
+
+
+
+.filterPanel{
+
+    /*outline: solid 1px red;*/
+
+    width: 80%;
+    height: 100px;
+
+
+
+}
+
+
+.pagination{
+
+    /*outline: solid 1px blue;*/
+
+    width: 80%;
+
+
+
+}
+
+.pagination .pageNmbr{
+    margin-left: 10px;
+}
+
+
+
+.model table{
+    text-align: center;
+    width: 80%;
+}
+
+.model table, th, tr{
+    border: solid 1px black;
+}

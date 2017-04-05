@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pl" ng-app="sluzba">
+<head>
+    <meta charset="UTF-8">
+    <title>XSolve_Sluzba</title>
+
+    <link rel="stylesheet" href="main.css" />
+
+    <script src="./../node_modules/angular/angular.min.js"></script>
+
+    <script>
+        angular.module('sluzba', []).
+        constant('paginationSize', 5);
+    </script>
+
+
+    <script src="FrontController.js"></script>
+    <script src="filters.js"></script>
+    <script src="services.js"></script>
+
+</head>
+
+<body ng-controller="FrontCtrl">
+
+
+    <div class="filterPanel">
+
+        <h4>
+            Filter:
+
+            <select name="filterType" id="filterType" ng-model="filterSettings.colName">
+
+                <option value="">Select one</option>
+                <option ng-repeat="name in columnsName" value="{{ name }}">{{ name }}</option>
+
+            </select>
+
+
+            <input type="datetime-local" ng-model="filterSettings.dateValue" ng-show="filterSettings.colName == 'dateOfBirth'"/>
+            <input type="text" ng-model="filterSettings.value" ng-show="filterSettings.colName !== 'dateOfBirth'"/>
+
+
+        </h4>
+
+    </div>
+
+
+    <div class="model">
+
+        <div class="dataNotAvailable" ng-show="currentModel.length == 0">
+            Nothing to show
+        </div>
+
+
+        <div class="dataAvailable" ng-show="currentModel.length > 0">
+
+
+            <div class="pagination">
+
+                <h4>
+
+                    See page:
+
+                    <a href="#" class="pageNmbr" ng-click="selectPage(0)">All</a>
+                    <a href="#" class="pageNmbr" ng-repeat="pageNmbr in currentModel | pageSizeCounter" ng-click="selectPage(pageNmbr)">{{ pageNmbr }}</a>
+
+                </h4>
+
+            </div>
+
+
+            <table class="data">
+
+                <tr>
+                    <th ng-repeat="name in columnsName">
+
+                        <a href="#" data-sorting-method="asc" ng-click="sortDataByColumn(name, $event)">{{ name }} &#8595</a>
+
+                    </th>
+                </tr>
+
+                <tr align="center" ng-repeat="person in currentModel | limitModel:selectedPage track by person.id">
+
+                    <td ng-repeat="value in person">{{ value }}</td>
+
+                </tr>
+
+
+            </table>
+
+        </div>
+
+
+
+
+    </div>
+
+
+</body>
+</html>
