@@ -101,13 +101,13 @@
                         <a
                                 href="#"
                                 data-sorting-method="asc"
-                                class="{{ sortedSettings.columnName === name? 'active' : '' }}"
+                                class="{{ sortedSettings.columnName === name && currentModel.length > 1? 'active' : '' }}"
                                 ng-click="sortDataByColumn(name, $event)"
                         >
                             {{ name }}
                         </a>
 
-                        <div class="sort_icon" ng-show="sortedSettings.columnName === name">
+                        <div class="sort_icon" ng-show="sortedSettings.columnName === name && currentModel.length > 1">
 
                             <span class="asc glyphicon glyphicon-chevron-down" ng-show="sortedSettings.type === 'desc'"></span>
 

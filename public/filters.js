@@ -5,22 +5,34 @@ angular.module('sluzba')
 
         return (model = [], filterSettings)=>{
 
-
-            var filteredModel = model;
+            var filteredModel = model,
+                stringSource;
 
             if(filterSettings.colName !== ''){
 
-
-                if(filterSettings.value !== ''){
+                if(
+                    typeof filterSettings.value === 'string' &&
+                    filterSettings.value !== ''
+                ){
 
                     filteredModel = [];
 
                     model.forEach((data)=>{
 
-                        if(data[filterSettings.colName].toString().indexOf(filterSettings.value) !== -1){
+                        //for numbers
+                        if(filterSettings.colName === 'id' || filterSettings.colName === 'experience') {
+
+                            stringSource = data[filterSettings.colName].toString();
+                        }
+                        else{
+
+                            stringSource = data[filterSettings.colName].toLowerCase();
+                        }
+
+
+                        if(stringSource.slice(0, filterSettings.value.length) == filterSettings.value.toLowerCase()){
 
                             filteredModel.push(data);
-
                         }
 
                     });
@@ -35,9 +47,7 @@ angular.module('sluzba')
                             var timeSearching = filterSettings.dateValue.getTime(),
                                 timeFromCurrentModelData = 0;
 
-
                             filteredModel = [];
-
 
                             model.forEach((data)=>{
 
@@ -52,7 +62,10 @@ angular.module('sluzba')
                         }
 
                     }
-                    catch(error){console.log(error);}
+                    catch(error){
+
+                        filteredModel = [];
+                    }
 
                 }
 
@@ -79,7 +92,6 @@ angular.module('sluzba')
             if(pageNmbr === 0){
 
                 return model;
-
             }
 
             return model.slice(startIndex, endIndex);
@@ -214,7 +226,6 @@ angular.module('sluzba')
 
 
             return (data, propName, direction)=>{
-
 
                 switch(typeof data[0][propName]){
 
