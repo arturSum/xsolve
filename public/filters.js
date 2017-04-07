@@ -69,16 +69,10 @@ angular.module('sluzba')
 
                 }
 
-
             }
 
-
             return filteredModel;
-
         }
-
-
-
     }).
 
     filter('limitModel', (paginationSize)=>{
@@ -95,7 +89,6 @@ angular.module('sluzba')
             }
 
             return model.slice(startIndex, endIndex);
-
         }
 
     }).
@@ -142,18 +135,14 @@ angular.module('sluzba')
                         data[propName]
                     );
 
-
-                    //takie same miejsca umieszczenia w tablicy
                     dateKeyStorage.push(singleIntDate);
                     dateValueStorage.push(data);
-
 
                     temp.push({
                         dataForSorting : singleIntDate
                     });
 
                 });
-
 
                 return [
                     dateKeyStorage,
@@ -163,12 +152,9 @@ angular.module('sluzba')
 
             },
 
-
             sortStrings = (model, filteredPropName, direction)=>{
 
-
                 if(filteredPropName == 'dateOfBirth'){
-
 
                     var sortedTemporaryDateStorage = [],
                         sortedModel = [],
@@ -183,15 +169,12 @@ angular.module('sluzba')
 
                     //---------------------------
 
-
                     sortedTemporaryDateStorage = sortNumbers(unsortedTemporaryDateStorage, 'dataForSorting', 'asc');
-
 
                     sortedTemporaryDateStorage.forEach((data)=>{
 
                            var searchingValue = data.dataForSorting,
                                searchingValuePosition = unsortedIntDateKeyStorage.indexOf(searchingValue);
-
 
                            if(searchingValue != -1){
 
@@ -201,7 +184,6 @@ angular.module('sluzba')
                     });
 
                     model = sortedModel;
-
                 }
                 else{
 
@@ -211,7 +193,6 @@ angular.module('sluzba')
                     });
 
                 }
-
 
                 if(direction === 'desc') {
 
@@ -246,7 +227,6 @@ angular.module('sluzba')
     }).
 
     filter('pageSizeCounter', (paginationSize)=>{
-
 
         return(model)=>{
 

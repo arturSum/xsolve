@@ -35,7 +35,6 @@ describe('filters', function(){
     });
 
 
-
     describe('filterModel', function() {
 
         var filteredModel = [];
@@ -103,9 +102,7 @@ describe('filters', function(){
                 filteredModel = filterInstance('filterModel')(modelData, filterSettings);
                 expect(filteredModel.length).toBe(12);
 
-
             });
-
 
         });
 
@@ -174,39 +171,45 @@ describe('filters', function(){
 
             });
 
-
         });
 
 
         //######################
-        xdescribe('colName:dateOfBirth', function () {
-
+        describe('colName:dateOfBirth', function () {
 
             it('should return corrected filtered model array', function () {
 
-                //"dateOfBirth":"1.7.1990 11:35",
+                //"dateOfBirth":"1.7.1990 11:35" / month counting from 0 !
 
                 filterSettings.colName = 'dateOfBirth';
-                filterSettings.dateValue = new Date('1990', '07', '01', '11', '34');
+                filterSettings.dateValue = new Date('1990', '06', '01', '11', '34');
+
+                filteredModel = filterInstance('filterModel')(modelData, filterSettings);
+                expect(filteredModel.length).toBe(0);
+
+                filterSettings.dateValue = new Date('1990', '6', '1', '11', '35');
+
+                filteredModel = filterInstance('filterModel')(modelData, filterSettings);
+                expect(filteredModel.length).toBe(1);
+
+
+                //-------- 09.12.1972 17:35 ------------
+
+                filterSettings.dateValue = new Date('1001', '6', '13', '01', '00');
 
                 filteredModel = filterInstance('filterModel')(modelData, filterSettings);
                 expect(filteredModel.length).toBe(0);
 
 
-                filterSettings.dateValue = new Date('1990', '7', '1', '11', '35');
-
-                console.log(filterSettings.dateValue.getTime());
-
+                filterSettings.dateValue = new Date('1972', '11', '09', '17', '35');
 
                 filteredModel = filterInstance('filterModel')(modelData, filterSettings);
-                expect(filteredModel.length).toBe(11);
+                expect(filteredModel.length).toBe(1);
 
 
             });
 
-
         });
-
 
     });
 
@@ -352,7 +355,7 @@ describe('filters', function(){
         describe('sort by numbers', function(){
 
 
-            it('should sort with required direction', function(){
+            it('should sort model with required direction', function(){
 
                 sortedModel = filterInstance('sortData')(modelData, 'id', 'asc');
 
@@ -390,7 +393,7 @@ describe('filters', function(){
         describe('sort strings', function(){
 
 
-            it('should sort with required direction', function(){
+            it('should sort model with required direction', function(){
 
                 sortedModel = filterInstance('sortData')(modelData, 'firstName', 'asc');
 
@@ -429,6 +432,38 @@ describe('filters', function(){
 
     });
 
+    describe('All filters', function(){
 
+        var filteredModel = [],
+            pageSize;
+
+        beforeEach(angular.mock.inject(function ($filter, mockedModel, paginationSize) {
+
+            filterInstance = $filter;
+            modelData = mockedModel;
+            pageSize = paginationSize;
+
+        }));
+
+        it('filters filterModel/limitModel/sortData should not modify model structure', function(){
+
+            filterSettings.colName = 'id';
+            filterSettings.value = '1';
+
+            filteredModel = filterInstance('filterModel')(modelData, filterSettings);
+            expect(Object.keys(filteredModel[0])).toEqual(Object.keys(modelData[4]));
+
+
+            filteredModel = filterInstance('limitModel')(modelData, 1);
+            expect(Object.keys(filteredModel[1])).toEqual(Object.keys(modelData[2]));
+
+
+            filteredModel = filterInstance('sortData')(modelData, 'id', 'desc');
+            expect(Object.keys(filteredModel[10])).toEqual(Object.keys(modelData[0]));
+
+
+        })
+
+    });
 
 });

@@ -19,7 +19,6 @@
     "karma": "^1.6.0",
     "karma-chrome-launcher": "^2.0.0",
     "karma-jasmine": "^1.1.0",
-    "karma-mocha-reporter": "^2.2.3",
-    "karma-read-json": "^1.1.0"
+    "karma-mocha-reporter": "^2.2.3"
   }
 }
